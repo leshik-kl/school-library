@@ -1,5 +1,4 @@
 <?php
-
 // app/Http/Controllers/CatalogController.php
 
 namespace App\Http\Controllers;
@@ -19,10 +18,10 @@ class CatalogController extends Controller
         // Поиск по названию или автору
         if ($request->filled('search')) {
             $search = $request->search;
-            $query->where(function ($q) use ($search) {
+            $query->where(function($q) use ($search) {
                 $q->where('title', 'ilike', "%{$search}%")
                     ->orWhere('isbn', 'ilike', "%{$search}%")
-                    ->orWhereHas('authors', function ($q) use ($search) {
+                    ->orWhereHas('authors', function($q) use ($search) {
                         $q->where('last_name', 'ilike', "%{$search}%")
                             ->orWhere('first_name', 'ilike', "%{$search}%");
                     });
@@ -31,7 +30,7 @@ class CatalogController extends Controller
 
         // Фильтр по категории
         if ($request->filled('category')) {
-            $query->whereHas('categories', function ($q) use ($request) {
+            $query->whereHas('categories', function($q) use ($request) {
                 $q->where('slug', $request->category);
             });
         }
@@ -47,7 +46,12 @@ class CatalogController extends Controller
         $query->orderBy($sort, $order);
 
         $books = $query->paginate(12);
-        $categories = Category::withCount('books')->having('books_count', '>', 0)->get();
+
+        // Получаем все категории и фильтруем в PHP
+        $allCategories = Category::all();
+        $categories = $allCategories->filter(function($category) {
+            return $category->books()->count() > 0;
+        });
 
         return view('catalog.index', compact('books', 'categories'));
     }
@@ -58,7 +62,7 @@ class CatalogController extends Controller
             ->findOrFail($id);
 
         $relatedBooks = Book::with(['authors'])
-            ->whereHas('categories', function ($q) use ($book) {
+            ->whereHas('categories', function($q) use ($book) {
                 $q->whereIn('categories.id', $book->categories->pluck('id'));
             })
             ->where('id', '!=', $book->id)

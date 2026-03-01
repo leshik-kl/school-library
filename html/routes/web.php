@@ -21,3 +21,16 @@ Route::middleware(['auth'])->group(function () {
 
 // Маршруты аутентификации (если используете Laravel Breeze или Jetstream)
 // require __DIR__.'/auth.php';
+
+// Временные заглушки для маршрутов аутентификации
+Route::get('/login', function() {
+    return redirect('/catalog')->with('info', 'Для входа обратитесь к библиотекарю');
+})->name('login');
+
+Route::get('/register', function() {
+    return redirect('/catalog')->with('info', 'Регистрация временно недоступна');
+})->name('register');
+
+Route::post('/logout', function() {
+    return redirect('/catalog');
+})->name('logout');

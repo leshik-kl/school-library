@@ -157,6 +157,6 @@ return [
         // App\Providers\BroadcastServiceProvider::class, // Закомментировано
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-         App\Providers\MoonShineServiceProvider::class, // Наш кастомный провайдер
+         # App\Providers\MoonShineServiceProvider::class, // Наш кастомный провайдер
     ],
 ];
