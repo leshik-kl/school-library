@@ -1,5 +1,4 @@
 <?php
-// app/Providers/MoonShineMenuProvider.php
 
 namespace App\Providers;
 
@@ -13,9 +12,8 @@ use App\MoonShine\Resources\Category\CategoryResource;
 use App\MoonShine\Resources\Loan\LoanResource;
 use App\MoonShine\Resources\Publisher\PublisherResource;
 use App\MoonShine\Resources\Reader\ReaderResource;
-use App\MoonShine\Resources\Test\TestResource;
 
-class MoonShineMenuProvider extends ServiceProvider
+class MoonShineServiceProvider extends ServiceProvider
 {
     public function boot(): void
     {
@@ -28,7 +26,6 @@ class MoonShineMenuProvider extends ServiceProvider
                 LoanResource::class,
                 PublisherResource::class,
                 ReaderResource::class,
-                TestResource::class,
             ]);
         });
 
