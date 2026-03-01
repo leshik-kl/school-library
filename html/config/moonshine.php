@@ -19,6 +19,13 @@ use MoonShine\Laravel\Pages\Dashboard;
 use MoonShine\Laravel\Pages\ErrorPage;
 use MoonShine\Laravel\Pages\LoginPage;
 use MoonShine\Laravel\Pages\ProfilePage;
+use App\MoonShine\Resources\AuthorResource;
+use App\MoonShine\Resources\BookResource;
+use App\MoonShine\Resources\CategoryResource;
+use App\MoonShine\Resources\LoanResource;
+use App\MoonShine\Resources\PublisherResource;
+use App\MoonShine\Resources\ReaderResource;
+
 
 return [
     'title' => env('MOONSHINE_TITLE', 'MoonShine'),
@@ -105,29 +112,29 @@ return [
     'locales' => [],
 
     'resources' => [
-        App\MoonShine\Resources\Author\AuthorResource::class,
-        App\MoonShine\Resources\Book\BookResource::class,
-        App\MoonShine\Resources\Category\CategoryResource::class,
-        App\MoonShine\Resources\Loan\LoanResource::class,
-        App\MoonShine\Resources\Publisher\PublisherResource::class,
-        App\MoonShine\Resources\Reader\ReaderResource::class,
+        App\MoonShine\Resources\AuthorResource::class,
+        App\MoonShine\Resources\BookResource::class,
+        App\MoonShine\Resources\CategoryResource::class,
+        App\MoonShine\Resources\LoanResource::class,
+        App\MoonShine\Resources\PublisherResource::class,
+        App\MoonShine\Resources\ReaderResource::class,
     ],
 
     'menu' => [
         [
             'label' => 'Библиотека',
             'items' => [
-                ['label' => 'Книги', 'resource' => App\MoonShine\Resources\Book\BookResource::class],
-                ['label' => 'Авторы', 'resource' => App\MoonShine\Resources\Author\AuthorResource::class],
-                ['label' => 'Категории', 'resource' => App\MoonShine\Resources\Category\CategoryResource::class],
-                ['label' => 'Издательства', 'resource' => App\MoonShine\Resources\Publisher\PublisherResource::class],
+                ['label' => 'Книги', 'resource' => BookResource::class],
+                ['label' => 'Авторы', 'resource' => AuthorResource::class],
+                ['label' => 'Категории', 'resource' => CategoryResource::class],
+                ['label' => 'Издательства', 'resource' => PublisherResource::class],
             ],
         ],
         [
             'label' => 'Читатели',
             'items' => [
-                ['label' => 'Читатели', 'resource' => App\MoonShine\Resources\Reader\ReaderResource::class],
-                ['label' => 'Выдачи', 'resource' => App\MoonShine\Resources\Loan\LoanResource::class],
+                ['label' => 'Читатели', 'resource' => ReaderResource::class],
+                ['label' => 'Выдачи', 'resource' => LoanResource::class],
             ],
         ],
     ],

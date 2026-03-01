@@ -1,6 +1,6 @@
 <?php
 
-namespace App\MoonShine\Resources\Publisher;
+namespace App\MoonShine\Resources;
 
 use App\Models\Publisher;
 use MoonShine\Laravel\Resources\ModelResource;
@@ -32,7 +32,7 @@ class PublisherResource extends ModelResource
                 ])->columnSpan(8),
 
                 Column::make([
-                    HasMany::make('Книги', 'books', resource: \App\MoonShine\Resources\Book\BookResource::class)
+                    HasMany::make('Книги', 'books', resource: \App\MoonShine\Resources\BookResource::class)
                         ->async(),
                 ])->columnSpan(4),
             ]),

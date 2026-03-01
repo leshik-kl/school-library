@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\MoonShine\Resources\Loan;
+namespace App\MoonShine\Resources;
 
 use App\Models\Loan;
 use MoonShine\Laravel\Resources\ModelResource;
@@ -39,11 +39,11 @@ class LoanResource extends ModelResource
                     ]),
 
                     Flex::make([
-                        BelongsTo::make('Книга', 'book', resource: \App\MoonShine\Resources\Book\BookResource::class)
+                        BelongsTo::make('Книга', 'book', resource: \App\MoonShine\Resources\BookResource::class)
                             ->required()
                             ->asyncSearch(),
 
-                        BelongsTo::make('Читатель', 'reader', resource: \App\MoonShine\Resources\Reader\ReaderResource::class)
+                        BelongsTo::make('Читатель', 'reader', resource: \App\MoonShine\Resources\ReaderResource::class)
                             ->required()
                             ->asyncSearch(),
                     ]),
@@ -123,7 +123,7 @@ class LoanResource extends ModelResource
                 ]),
             Date::make('Дата выдачи', 'loan_date'),
             Date::make('Срок возврата', 'due_date'),
-            BelongsTo::make('Читатель', 'reader', resource: \App\MoonShine\Resources\Reader\ReaderResource::class)
+            BelongsTo::make('Читатель', 'reader', resource: \App\MoonShine\Resources\ReaderResource::class)
                 ->asyncSearch(),
         ];
     }

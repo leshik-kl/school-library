@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\MoonShine\Resources\Reader;
+namespace App\MoonShine\Resources;
 
 use App\Models\Reader;
 use MoonShine\Laravel\Resources\ModelResource;
@@ -76,7 +76,7 @@ class ReaderResource extends ModelResource
                 ])->columnSpan(8),
 
                 Column::make([
-                    HasMany::make('Выдачи', 'loans', resource: \App\MoonShine\Resources\Loan\LoanResource::class)
+                    HasMany::make('Выдачи', 'loans', resource: \App\MoonShine\Resources\LoanResource::class)
                         ->async(),
                 ])->columnSpan(4),
             ]),

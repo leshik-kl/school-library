@@ -1,6 +1,6 @@
 <?php
 
-namespace App\MoonShine\Resources\Author;
+namespace App\MoonShine\Resources;
 
 use App\Models\Author;
 use MoonShine\Laravel\Resources\ModelResource;
@@ -49,7 +49,7 @@ class AuthorResource extends ModelResource
                 ])->columnSpan(8),
 
                 Column::make([
-                    BelongsToMany::make('Книги', 'books', resource: \App\MoonShine\Resources\Book\BookResource::class)
+                    BelongsToMany::make('Книги', 'books', resource: \App\MoonShine\Resources\BookResource::class)
                         ->selectMode()
                         ->asyncSearch(),
                 ])->columnSpan(4),
@@ -57,7 +57,7 @@ class AuthorResource extends ModelResource
 
             Tabs::make([
                 Tab::make('Книги автора', [
-                    HasMany::make('Книги', 'books', resource: \App\MoonShine\Resources\Book\BookResource::class)
+                    HasMany::make('Книги', 'books', resource: \App\MoonShine\Resources\BookResource::class)
                         ->creatable()
                         ->async(),
                 ]),

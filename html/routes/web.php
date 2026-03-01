@@ -111,3 +111,30 @@ Route::get('/test-resource-access', function() {
         'cookies' => request()->cookies->all(),
     ];
 });
+
+// Простой тест middleware
+Route::get('/test-middleware', function() {
+    return [
+        'auth_moonshine_check' => auth()->guard('moonshine')->check(),
+        'auth_web_check' => auth()->guard('web')->check(),
+        'user_moonshine' => auth()->guard('moonshine')->user()?->email,
+        'session' => session()->all(),
+    ];
+})->middleware('auth.moonshine');
+
+// Тест без middleware
+Route::get('/test-no-middleware', function() {
+    return [
+        'auth_moonshine_check' => auth()->guard('moonshine')->check(),
+        'auth_web_check' => auth()->guard('web')->check(),
+        'user_moonshine' => auth()->guard('moonshine')->user()?->email,
+    ];
+});
+
+// Тест с полным именем класса
+Route::get('/test-middleware-full', function() {
+    return [
+        'auth_moonshine_check' => auth()->guard('moonshine')->check(),
+        'user_moonshine' => auth()->guard('moonshine')->user()?->email,
+    ];
+})->middleware(\MoonShine\Laravel\Http\Middleware\Authenticate::class);

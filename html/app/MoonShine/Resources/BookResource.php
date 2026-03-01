@@ -1,6 +1,6 @@
 <?php
 
-namespace App\MoonShine\Resources\Book;
+namespace App\MoonShine\Resources;
 
 use App\Models\Book;
 use MoonShine\Laravel\Resources\ModelResource;
@@ -47,7 +47,7 @@ class BookResource extends ModelResource
                             Textarea::make('Описание', 'description')->hideOnIndex(),
 
                             BelongsTo::make('Издательство', 'publisher',
-                                resource: \App\MoonShine\Resources\Publisher\PublisherResource::class)
+                                resource: \App\MoonShine\Resources\PublisherResource::class)
                                 ->asyncSearch()
                                 ->nullable(),
 
@@ -107,20 +107,20 @@ class BookResource extends ModelResource
 
                 Column::make([
                     BelongsToMany::make('Авторы', 'authors',
-                        resource: \App\MoonShine\Resources\Author\AuthorResource::class)
+                        resource: \App\MoonShine\Resources\AuthorResource::class)
                         ->selectMode()
                         ->asyncSearch()
                         ->required(),
 
                     BelongsToMany::make('Категории', 'categories',
-                        resource: \App\MoonShine\Resources\Category\CategoryResource::class)
+                        resource: \App\MoonShine\Resources\CategoryResource::class)
                         ->selectMode()
                         ->asyncSearch(),
                 ])->columnSpan(4),
             ]),
 
             HasMany::make('Выдачи', 'loans',
-                resource: \App\MoonShine\Resources\Loan\LoanResource::class)
+                resource: \App\MoonShine\Resources\LoanResource::class)
                 ->async(),
         ];
     }
@@ -164,7 +164,7 @@ class BookResource extends ModelResource
                     'lost' => 'Утеряна',
                 ]),
             BelongsTo::make('Издательство', 'publisher',
-                resource: \App\MoonShine\Resources\Publisher\PublisherResource::class)
+                resource: \App\MoonShine\Resources\PublisherResource::class)
                 ->asyncSearch(),
         ];
     }

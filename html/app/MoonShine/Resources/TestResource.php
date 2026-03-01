@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\MoonShine\Resources\Test;
+namespace App\MoonShine\Resources;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Test;

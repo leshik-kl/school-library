@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\MoonShine\Resources\Category;
+namespace App\MoonShine\Resources;
 
 use App\Models\Category;
 use MoonShine\Laravel\Resources\ModelResource;
@@ -46,7 +46,7 @@ class CategoryResource extends ModelResource
                             ->async(),
                     ]),
 
-                    BelongsToMany::make('Книги', 'books', resource: \App\MoonShine\Resources\Book\BookResource::class)
+                    BelongsToMany::make('Книги', 'books', resource: \App\MoonShine\Resources\BookResource::class)
                         ->async(),
                 ])->columnSpan(12),
             ]),
