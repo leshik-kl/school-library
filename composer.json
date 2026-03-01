@@ -1,0 +1,5 @@
+{
+    "require": {
+        "moonshine/moonshine": "4.8"
+    }
+}
