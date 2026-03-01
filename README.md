@@ -43,12 +43,12 @@
 git clone https://github.com/leshik-kl/school-library.git
 cd school-library
 
-===Запуск Docker контейнеров
+#### 2.Запуск Docker контейнеров
 
 docker compose up -d
 
 
-===Установка зависимостей Laravel
+#### 3.Установка зависимостей Laravel
 
 docker compose exec php bash
 
@@ -56,14 +56,14 @@ cd /var/www/html
 
 composer install
 
----Настройка окружения
+#### 4.Настройка окружения
 
 
 cp .env.example .env
 
 php artisan key:generate
 
-Настройка базы данных
+#### 5.Настройка базы данных
 
 # В .env файле должны быть правильные настройки:
 # DB_CONNECTION=pgsql
@@ -73,11 +73,11 @@ php artisan key:generate
 # DB_USERNAME=library_user
 # DB_PASSWORD=library_password
 
- Запуск миграций и сидов
+#### 6. Запуск миграций и сидов
 
 php artisan migrate --seed
 
-Создание администратора Moonshine
+#### 7.Создание администратора Moonshine
 
 php artisan moonshine:user
 # Следуйте инструкциям для создания пользователя
@@ -86,7 +86,7 @@ php artisan moonshine:user
 # Email: admin@library.local
 # Password: password
 
-Настройка прав доступа
+#### 8.Настройка прав доступа
 
 chmod -R 777 storage bootstrap/cache
 chmod -R 777 storage/framework/sessions
@@ -96,7 +96,7 @@ chmod -R 777 storage/framework/sessions
 
 exit
 
-Доступ к приложению
+#### 9.Доступ к приложению
 После запуска контейнеров приложение будет доступно по адресам:
 
 Публичная часть: http://localhost
@@ -124,11 +124,11 @@ Password: password
 Выдачи: http://localhost/admin/resource/loan-resource/crud
 
 
-Доступ к базе данных
+#### 10.Доступ к базе данных
 
 docker compose exec postgres psql -U library_user -d library_db
 
-Полезные команды
+#### 11.Полезные команды
 
 # Запуск контейнеров
 docker compose up -d
@@ -145,7 +145,7 @@ docker compose logs -f nginx
 docker compose logs -f postgres
 
 
-Работа с Laravel
+#### 12.Работа с Laravel
 
 
 # Вход в PHP контейнер
