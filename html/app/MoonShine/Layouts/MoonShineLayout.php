@@ -16,6 +16,7 @@ use App\MoonShine\Resources\Category\CategoryResource;
 use App\MoonShine\Resources\Book\BookResource;
 use App\MoonShine\Resources\Reader\ReaderResource;
 use App\MoonShine\Resources\Loan\LoanResource;
+use App\MoonShine\Resources\Test\TestResource;
 
 final class MoonShineLayout extends AppLayout
 {
@@ -41,6 +42,7 @@ final class MoonShineLayout extends AppLayout
             MenuItem::make(BookResource::class, 'Books'),
             MenuItem::make(ReaderResource::class, 'Readers'),
             MenuItem::make(LoanResource::class, 'Loans'),
+            MenuItem::make(TestResource::class, 'Tests'),
         ];
     }
 

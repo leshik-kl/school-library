@@ -24,4 +24,8 @@ class Kernel extends ConsoleKernel
 
         require base_path('routes/console.php');
     }
+    protected $middlewareAliases = [
+        // ... другие middleware
+        'redirect.index' => \App\Http\Middleware\RedirectIndexPage::class,
+    ];
 }

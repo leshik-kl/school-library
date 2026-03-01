@@ -1,21 +1,21 @@
 <?php
+// app/Providers/MoonShineMenuProvider.php
 
 namespace App\Providers;
 
+use Illuminate\Support\ServiceProvider;
+use MoonShine\Laravel\DependencyInjection\MoonShine;
+use MoonShine\MenuManager\MenuGroup;
+use MoonShine\MenuManager\MenuItem;
 use App\MoonShine\Resources\Author\AuthorResource;
 use App\MoonShine\Resources\Book\BookResource;
 use App\MoonShine\Resources\Category\CategoryResource;
 use App\MoonShine\Resources\Loan\LoanResource;
 use App\MoonShine\Resources\Publisher\PublisherResource;
 use App\MoonShine\Resources\Reader\ReaderResource;
-use Illuminate\Support\ServiceProvider;
-use MoonShine\Laravel\DependencyInjection\MoonShine;
-use MoonShine\Laravel\DependencyInjection\MoonShineConfigurator;
-use MoonShine\MenuManager\MenuGroup;
-use MoonShine\MenuManager\MenuItem;
-use MoonShine\Laravel\Http\Middleware\Authenticate;
+use App\MoonShine\Resources\Test\TestResource;
 
-class MoonShineServiceProvider extends ServiceProvider
+class MoonShineMenuProvider extends ServiceProvider
 {
     public function boot(): void
     {
@@ -28,35 +28,34 @@ class MoonShineServiceProvider extends ServiceProvider
                 LoanResource::class,
                 PublisherResource::class,
                 ReaderResource::class,
+                TestResource::class,
             ]);
         });
 
-        // Регистрируем меню через конфигурацию
-        $this->registerMenu();
+        // Добавляем JavaScript для исправления ссылок
+        $this->addMenuFixScript();
     }
 
-    protected function registerMenu(): void
+    protected function addMenuFixScript(): void
     {
-        $this->app->booted(function () {
-            $moonshine = app(MoonShine::class);
+        // Добавляем скрипт в секцию head через view composer
+        view()->composer('moonshine::layouts.shared.head', function ($view) {
+            $script = <<<JS
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    // Исправляем все ссылки в меню
+                    setTimeout(function() {
+                        document.querySelectorAll('.menu a').forEach(function(link) {
+                            if (link.href.includes('index-page')) {
+                                link.href = link.href.replace('index-page', 'crud');
+                            }
+                        });
+                    }, 100);
+                });
+            </script>
+            JS;
 
-            // В Moonshine 4.8 меню регистрируется через конфиг или через MenuManager
-            $menu = [
-                MenuGroup::make('Библиотека', [
-                    MenuItem::make('Книги', BookResource::class),
-                    MenuItem::make('Авторы', AuthorResource::class),
-                    MenuItem::make('Категории', CategoryResource::class),
-                    MenuItem::make('Издательства', PublisherResource::class),
-                ]),
-
-                MenuGroup::make('Читатели', [
-                    MenuItem::make('Читатели', ReaderResource::class),
-                    MenuItem::make('Выдачи', LoanResource::class),
-                ]),
-            ];
-
-            // Сохраняем меню в конфиг
-            config(['moonshine.menu' => $menu]);
+            echo $script;
         });
     }
 

@@ -158,5 +158,6 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
          # App\Providers\MoonShineServiceProvider::class, // Наш кастомный провайдер
+        App\Providers\MenuServiceProvider::class,
     ],
 ];

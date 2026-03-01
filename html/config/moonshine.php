@@ -20,7 +20,6 @@ use MoonShine\Laravel\Pages\ErrorPage;
 use MoonShine\Laravel\Pages\LoginPage;
 use MoonShine\Laravel\Pages\ProfilePage;
 
-
 return [
     'title' => env('MOONSHINE_TITLE', 'MoonShine'),
     'logo' => '/vendor/moonshine/logo-small.svg',
@@ -33,24 +32,20 @@ return [
         'safari-pinned-tab' => '/vendor/moonshine/safari-pinned-tab.svg',
     ],
 
-    // Default flags
     'use_migrations' => true,
     'use_notifications' => true,
     'use_database_notifications' => true,
     'use_routes' => true,
     'use_profile' => true,
 
-    // Routing
     'domain' => env('MOONSHINE_DOMAIN'),
     'prefix' => env('MOONSHINE_ROUTE_PREFIX', 'admin'),
     'page_prefix' => env('MOONSHINE_PAGE_PREFIX', 'page'),
     'resource_prefix' => env('MOONSHINE_RESOURCE_PREFIX', 'resource'),
     'home_route' => 'moonshine.index',
 
-    // Error handling
     'not_found_exception' => MoonShineNotFoundException::class,
 
-    // Middleware
     'middleware' => [
         EncryptCookies::class,
         AddQueuedCookiesToResponse::class,
@@ -60,14 +55,13 @@ return [
         VerifyCsrfToken::class,
         SubstituteBindings::class,
         ChangeLocale::class,
+        \App\Http\Middleware\RedirectIndexPage::class,
     ],
 
-    // Storage
     'disk' => 'public',
     'disk_options' => [],
     'cache' => 'file',
 
-    // Authentication and profile
     'auth' => [
         'enabled' => true,
         'guard' => 'moonshine',
@@ -78,7 +72,12 @@ return [
         'pipelines' => [],
     ],
 
-    // Authentication and profile
+    'route' => [
+        'prefix' => 'admin',
+        'middleware' => ['web', 'auth.moonshine'],
+        'home' => 'moonshine.index',
+    ],
+
     'user_fields' => [
         'username' => 'email',
         'password' => 'password',
@@ -86,9 +85,8 @@ return [
         'avatar' => 'avatar',
     ],
 
-    // Layout, palette, pages, forms
     'layout' => App\MoonShine\Layouts\MoonShineLayout::class,
-    'palette' => MoonShine\ColorManager\Palettes\PurplePalette::class,
+    'palette' => PurplePalette::class,
 
     'forms' => [
         'login' => LoginForm::class,
@@ -102,12 +100,10 @@ return [
         'error' => ErrorPage::class,
     ],
 
-    // Localizations
     'locale' => 'en',
     'locale_key' => ChangeLocale::KEY,
-    'locales' => [
-        // en
-    ],
+    'locales' => [],
+
     'resources' => [
         App\MoonShine\Resources\Author\AuthorResource::class,
         App\MoonShine\Resources\Book\BookResource::class,
@@ -116,6 +112,7 @@ return [
         App\MoonShine\Resources\Publisher\PublisherResource::class,
         App\MoonShine\Resources\Reader\ReaderResource::class,
     ],
+
     'menu' => [
         [
             'label' => 'Библиотека',

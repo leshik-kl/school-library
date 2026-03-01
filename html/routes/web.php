@@ -34,3 +34,80 @@ Route::get('/register', function() {
 Route::post('/logout', function() {
     return redirect('/catalog');
 })->name('logout');
+
+// Редирект для старых ссылок
+Route::get('admin/resource/{resource}/index-page', function($resource) {
+    return redirect("admin/resource/{$resource}/crud");
+})->where('resource', '.*');
+
+// Редирект для старых ссылок с index-page на crud
+Route::get('admin/resource/{resource}/index-page', function($resource) {
+    return redirect("admin/resource/{$resource}/crud");
+})->where('resource', '.*');
+
+// Редирект для всех страниц с index-page
+Route::get('admin/resource/{resource}/{page}', function($resource, $page) {
+    if ($page === 'index-page') {
+        return redirect("admin/resource/{$resource}/crud");
+    }
+    abort(404);
+})->where('resource', '.*')->where('page', '.*');
+
+// Редирект для старых ссылок с index-page на crud
+Route::get('admin/resource/{resource}/index-page', function($resource) {
+    $resourceMap = [
+        'author-resource' => 'author-resource',
+        'book-resource' => 'book-resource',
+        'category-resource' => 'category-resource',
+        'loan-resource' => 'loan-resource',
+        'publisher-resource' => 'publisher-resource',
+        'reader-resource' => 'reader-resource',
+    ];
+    
+    if (isset($resourceMap[$resource])) {
+        return redirect("/admin/resource/{$resourceMap[$resource]}/crud");
+    }
+    
+    return redirect("/admin/resource/{$resource}/crud");
+})->where('resource', '.*');
+
+// Тестовый маршрут для проверки аутентификации
+Route::get('/test-auth', function() {
+    return [
+        'authenticated' => auth()->check(),
+        'guard' => auth()->getDefaultDriver(),
+        'user' => auth()->user(),
+        'session' => session()->all(),
+    ];
+});
+
+Route::get('/test-moonshine-auth', function() {
+    return [
+        'authenticated' => auth()->guard('moonshine')->check(),
+        'user' => auth()->guard('moonshine')->user(),
+        'session' => session()->all(),
+    ];
+});
+
+// Тестовый маршрут для проверки доступа к ресурсу
+Route::get('/test-resource-access', function() {
+    $guards = [
+        'web' => auth()->guard('web')->check(),
+        'moonshine' => auth()->guard('moonshine')->check(),
+    ];
+    
+    $user = [
+        'web' => auth()->guard('web')->user(),
+        'moonshine' => auth()->guard('moonshine')->user(),
+    ];
+    
+    return [
+        'authenticated' => $guards,
+        'users' => [
+            'web' => $user['web'] ? $user['web']->email : null,
+            'moonshine' => $user['moonshine'] ? $user['moonshine']->email : null,
+        ],
+        'session' => session()->all(),
+        'cookies' => request()->cookies->all(),
+    ];
+});
